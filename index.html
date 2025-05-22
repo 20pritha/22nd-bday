@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>22nd Birthday Scavenger Hunt</title>
+<style>
+  body {
+    background: #046307; /* emerald green */
+    color: #e6f2e6; /* pale white-green */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #b3e6b3;
+  }
+  .riddle {
+    background: #114d07;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px #1a6f0f;
+  }
+  .riddle p {
+    margin: 10px 0;
+    white-space: pre-line;
+  }
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+  input[type="text"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  button {
+    margin-top: 10px;
+    background-color: #1a6f0f;
+    border: none;
+    color: #e6f2e6;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    background-color: #2fa82f;
+  }
+  .message {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>22nd Birthday Scavenger Hunt</h1>
+
+<div id="riddle-container"></div>
+
+<script>
+  // Riddles array: question, correct answer (case insensitive)
+  const riddles = [
+    {
+      question: `1.\nWings of dreams and eyes on the sky,\nHe’s aiming high, he wants to fly.\nWith duty and honor in his heart,\nFind him before he takes off to start!`,
+      answer: "4829"
+    },
+    {
+      question: `2.\nYou measure my life in hours, I serve by being devoured.\nThin I am quick, fat I am slow. The wind is my foe.`,
+      answer: "candle"
+    },
+    {
+      question: `3.\nI once was a beast, an ant so feared,\nNow I serve my king, with voice that's weird.\nWith claws so sharp and loyalty grand,\nI'd destroy whole armies at a wave of his hand.\nI bow, I hiss, I serve with pride—\nFind the one with Beru vibes inside.`,
+      answer: "beru"
+    },
+    {
+      question: `4.\nShe knows the plan, she’s got the charm,\nWith her, the world’s a little more warm.\nShe’s holding a clue, that’s no lie—\nGo find the one who catches his eye.`,
+      answer: "8391"
+    },
+    {
+      question: `5.\nHe walks with swag, stands tall with pride,\nTeases you but still takes your side.\nHe’s older, cooler, kind of sly—\nGo find this guy, don’t be shy!`,
+      answer: "5732"
+    },
+    {
+      question: `6.\nHe took you to sand, pretending “just chill,”\nBut his hands were sweaty — nerves hard to kill.\nThe waves were crashing, his voice kinda cracked,\nHe dropped down (on purpose!) — heart fully attacked.\nYou said “yes,” and now here we are —\nFind the spot where he fumbled like a star.`,
+      answer: "6/10/2024"
+    },
+    {
+      question: `7.\nI march in squads, I roll with fate,\nMy dice decide my soldiers' state.\nWith paints and glue, I come to life,\nBut on the field, I bring the strife.\nI'm not a toy, I’m war with flair—\nFind the one who builds armies with care.`,
+      answer: "warhammer"
+    },
+    {
+      question: `8.\nI can be cracked, made, told, and played.\nBut if you don’t get me, you just stare in dismay.`,
+      answer: "joke"
+    },
+    {
+      question: `9.\nI’m not alive, but I grow.\nI have no lungs, but I need air.\nI have no mouth, but water kills me.`,
+      answer: "fire"
+    },
+    {
+      question: `10.\nWith vintage charm and cakes so sweet,\nA cozy corner, the perfect treat.\nCoffee brews and secrets bake,\nWhere red velvet steals the cake.\nIf hunger hits and vibes feel right,\nFind the place that’s pure delight.`,
+      answer: "glen’s bakehouse"
+    },
+    {
+      question: `11.\nBreak me, and I get stronger.\nStretch me, and I snap.\nIgnore me, and I wither.\nWhat am I?`,
+      answer: "trust"
+    },
+    {
+      question: `12.\nHe’s wise, kind, and aging fine,\nWith creams and oils that always shine.\nSkincare king with a glowing face,\nFind him in his self-care space.`,
+      answer: "7294"
+    },
+    {
+      question: `13.\nWhat number becomes smaller when you flip it upside down?`,
+      answer: "nine"
+    },
+    {
+      question: `14.\nI exist in theory, but everyone blames me.\nI never speak, yet silence me and your secrets are free.`,
+      answer: "wall"
+    },
+    {
+      question: `15.\nI’m the beginning of eternity, the end of time and space.\nThe beginning of every end, and the end of every place.`,
+      answer: "e"
+    },
+    {
+      question: `16.\nSmall in size but big in cheer,\nShe’s like a sister who’s always near.\nWith laughter, love, and playful fun,\nShe’s hiding a clue—go, little one!`,
+      answer: "5917"
+    },
+    {
+      question: `17.\nWhat comes first when you think second, and disappears when you act?`,
+      answer: "doubt"
+    },
+    {
+      question: `18.\nWrapped in seaweed, cool and neat,\nRice and fish, the perfect treat.\nI don’t need fire, I’m served raw,\nOne bite in, you’re in love — in awe.\nSoy me up and take a dip,\nFind the fan of every sushi trip.`,
+      answer: "sushi"
+    },
+    {
+      question: `19.\nI’m only useful once I’m broken.`,
+      answer: "egg"
+    },
+    {
+      question: `20.\nMom *She knows where everything goes,*\n*From your socks to tasty doughs.*\n*She’s the boss and hugs you tight,*\n*Find her where things feel just right.*`,
+      answer: "1482"
+    },
+    {
+      question: `21.\nYou can’t see me, but I’m always watching.\nYou can’t touch me, but I’m always felt.\nI follow you, but only in darkness.`,
+      answer: "fear"
+    },
+    {
+      question: `22.\nI don’t just drive — I glide with flair,\nA beast in purple, with curves so rare.\nOn tracks I scream, in streets I flex,\nThe dream machine that turns all necks.\nIf midnight’s shade makes your heart race,\nFind the one who'd sell their soul for a taste.`,
+      answer: "porsche 911 gt3 rs midnight purple"
+    }
+  ];
+
+  let current = 0;
+
+  const container = document.getElementById("riddle-container");
+
+  function showRiddle(index) {
+    container.innerHTML = `
+      <div class="riddle">
+        <p>${riddles[index].question}</p>
+        <label for="answer">Your answer:</label>
+        <input type="text" id="answer" autocomplete="off" />
+        <button onclick="checkAnswer()">Submit</button>
+        <p class="message" id="message"></p>
+      </div>
+    `;
+  }
+
+  function checkAnswer() {
+    const input = document.getElementById("answer").value.trim().toLowerCase();
+    const correct = riddles[current].answer.toLowerCase();
+
+    const messageEl = document.getElementById("message");
+
+    if (input === correct) {
+      current++;
+      if (current >= riddles.length) {
+        container.innerHTML = `
+          <h2 style="text-align:center; color:#b3e6b3;">You did it, Bday Boy! I love you so very much ❤️</h2>
+        `;
+      } else {
+        showRiddle(current);
+      }
+    } else {
+      messageEl.textContent = "Oops! Try again.";
+      messageEl.style.color = "#ff6666";
+    }
+  }
+
+  showRiddle(current);
+</script>
+
+</body>
+</html>
